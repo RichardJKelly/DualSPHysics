@@ -26,6 +26,9 @@
 #include "Functions.h"
 #include "JXml.h"
 #include <algorithm>
+#include "MVCtrlVars.h"
+//extern int *MVctrls;
+//extern int MVctrlSize;
 
 using namespace std;
 
@@ -192,6 +195,22 @@ void JMotion::MovAddTeleport(unsigned objid,unsigned id,unsigned nextid,const td
 //==============================================================================
 void JMotion::MovAddRectilinear(unsigned objid,unsigned id,unsigned nextid,double time,const tdouble3 &vel){
   MovAdd(objid,new JMotionMovRect(id,nextid,time,vel));
+}
+void JMotion::MovAddCtrl(unsigned objid,unsigned id,unsigned nextid,double time,const tdouble3 &vel){
+  int i;
+  MovAdd(objid,new JMotionMovCtrl(id,nextid,time,vel));//MVCTRL Change
+  MVctrlSize++;
+  int *MVCtrlsNew = new int(MVctrlSize);
+  for (i = 0; i < MVctrlSize -1; i++){
+  	MVCtrlsNew[i] = MVctrls[i];
+  }
+	MVCtrlsNew[MVctrlSize] = objid;
+	delete[] MVctrls;
+	MVctrls = MVCtrlsNew;
+	printf("MVCTRLS[]:\n");
+	for (i = MVctrlSize; i--;){
+		printf("%d",MVctrls[i]);
+	}
 }
 //==============================================================================
 // Anhade un movimiento rectilineo uniformemente acelerado
@@ -414,7 +433,7 @@ bool JMotion::ProcesTimeAce(double timestep,double dt){
 bool JMotion::ProcesTimeGetData(unsigned ref,bool &typesimple,tdouble3 &simplemov
   ,tdouble3 &simplevel,tdouble3 &simpleace,tmatrix4d &matmov,tmatrix4d &matmov2)const
 {
-  return(MotList->GetData(ref,typesimple,simplemov,simplevel,simpleace,matmov,matmov2));
+  return(MotList->GetData(ref,typesimple,simplemov,simplevel,simpleace,matmov,matmov2));//JMotionList object
 }
 
 //==============================================================================
@@ -564,7 +583,7 @@ void JMotion::ReadXml(const std::string &dirdata,JXml *jxml,TiXmlNode* node,unsi
         //printf("ObjAdd(%d,%d,%d)\n",id,idp,(name=="objreal"? jxml->GetAttributeInt(ele,"ref"): -1));
         ReadXml(dirdata,jxml,ele,id,id);
       }
-      else if(name=="wait"||name=="mvrect"||name=="mvrectace"||name=="mvrot"||name=="mvrotace"||name=="mvcir"||name=="mvcirace"||name=="mvrectsinu"||name=="mvrotsinu"||name=="mvcirsinu"||name=="mvpredef"||name=="mvfile"||name=="mvrectfile"||name=="mvrotfile"||name=="mvnull"){
+      else if(name=="wait"||name=="mvrect"||name=="mvrectace"||name=="mvrot"||name=="mvrotace"||name=="mvcir"||name=="mvcirace"||name=="mvrectsinu"||name=="mvrotsinu"||name=="mvcirsinu"||name=="mvpredef"||name=="mvfile"||name=="mvrectfile"||name=="mvrotfile"||name=="mvnull" || name=="mvctrl"){
         int mvid=jxml->GetAttributeInt(ele,"id");
         double time=0;
         int nextid=0;
@@ -583,8 +602,14 @@ void JMotion::ReadXml(const std::string &dirdata,JXml *jxml,TiXmlNode* node,unsi
         else if(name=="mvrect"){
           tdouble3 vel=jxml->ReadElementDouble3(ele,"vel");
           MovAddRectilinear(idp,mvid,nextid,time,vel);
-          //printf("MovAddRectilinear(%d,%d,%d,%g)\n",id,mvid,nextid,time);
+          printf("MovAddRectilinear(%d,%d,%d,%g)\n",id,mvid,nextid,time);
         }
+		else if(name=="mvctrl"){
+          tdouble3 vel=jxml->ReadElementDouble3(ele,"vel");
+          MovAddCtrl(idp,mvid,nextid,time,vel);
+          printf("MovAddCtrl(%d,%d,%d,%g)\n",id,mvid,nextid,time);
+		  
+		}
         else if(name=="mvrectace"){
           tdouble3 ace=jxml->ReadElementDouble3(ele,"ace");
           bool velpre=(ele->FirstChildElement("velini")==NULL);

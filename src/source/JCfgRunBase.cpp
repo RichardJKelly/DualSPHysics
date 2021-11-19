@@ -57,6 +57,8 @@ void JCfgRunBase::LoadDsphConfig(std::string path){
 //==============================================================================
 void JCfgRunBase::LoadArgv(int argc,char** argv){
   Reset();
+  ofstream logfile;
+  logfile.open("/home/richard/testing.log", std::ios_base::app);
   //-Loads configuration from DsphConfig.xml.
   LoadDsphConfig(AppInfo.GetProgramPath());
   //-Loads execution parameters.
@@ -69,7 +71,7 @@ void JCfgRunBase::LoadArgv(int argc,char** argv){
     if(pos>0){
       while(pos>0){
         bool divide=((tex[0]=='-' || tex[0]=='#') || (pos+2<tex.size() && ((tex[pos+1]=='-' && tex[pos+2]!=' ') || tex[pos+1]=='#')));
-        //printf("  tex[%s]  pos:%d  divide=%d\n",tex.c_str(),pos,(divide? 1: 0));
+        logfile << "  tex[" << tex.c_str() << "] pos:"<< pos << "divide= "<< (divide? 1: 0) <<"\n";
         if(divide){
           if(optn>=MAXOPTS)Run_Exceptioon("Has exceeded the maximum configuration options.");
           optlis[optn]=tex.substr(0,pos); optn++;
@@ -84,7 +86,7 @@ void JCfgRunBase::LoadArgv(int argc,char** argv){
       optlis[optn]=tex; optn++;
     }
   }
-  //for(int c=0;c<optn;c++)printf("[%d]=[%s]\n",c,optlis[c].c_str());
+  //for(int c=0;c<optn;c++)logfile<<c<< =[%s]\n"&(c,optlis[c].c_str());
   if(optn || NoParms)LoadOpts(optlis,optn,0,"");
   delete[] optlis;
   if(!optn && !NoParms)PrintInfo=true;
@@ -92,6 +94,7 @@ void JCfgRunBase::LoadArgv(int argc,char** argv){
     //VisuConfig(); 
   }
   else VisuInfo();
+  logfile.close();
 }
 
 //==============================================================================

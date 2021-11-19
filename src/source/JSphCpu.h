@@ -265,6 +265,10 @@ protected:
     ,const typecode *code,const unsigned *idp,unsigned *ridp)const;
   void MoveLinBound(unsigned np,unsigned ini,const tdouble3 &mvpos,const tfloat3 &mvvel
     ,const unsigned *ridp,tdouble3 *pos,unsigned *dcell,tfloat4 *velrhop,typecode *code)const;
+    
+  void MoveCtrlBound(unsigned np,unsigned ini,const tdouble3 &mvpos,const tfloat3 &mvvel
+    ,const unsigned *ridp,tdouble3 *pos,unsigned *dcell,tfloat4 *velrhop,typecode *code);
+  
   void MoveMatBound(unsigned np,unsigned ini,tmatrix4d m,double dt,const unsigned *ridpmv
     ,tdouble3 *pos,unsigned *dcell,tfloat4 *velrhop,typecode *code,tfloat3 *boundnormal)const;
   void CopyMotionVel(unsigned nmoving,const unsigned *ridp,const tfloat4 *velrhop,tfloat3 *motionvel)const;

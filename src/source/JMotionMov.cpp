@@ -46,6 +46,17 @@ void JMotionMovRect::WriteXml(TiXmlNode* node)const{
   JXml::AddAttribute(JXml::AddElementDouble3(node2,"vel",Vel),"units_comment","m/s");
 }
 //==============================================================================
+
+void JMotionMovCtrl::WriteXml(TiXmlNode* node)const{
+  TiXmlElement item("mvctrl"); 
+  JXml::AddAttribute(&item,"id",int(Id)); 
+  JXml::AddAttribute(&item,"duration",Time);
+  if(NextId)JXml::AddAttribute(&item,"next",int(NextId));
+  TiXmlNode* node2=node->InsertEndChild(item);
+  //-Define contenido de movimiento.
+  JXml::AddAttribute(JXml::AddElementDouble3(node2,"vel",Vel),"units_comment","m/s");
+}
+//==============================================================================
 void JMotionMovRectAce::WriteXml(TiXmlNode* node)const{
   TiXmlElement item("mvrectace"); 
   JXml::AddAttribute(&item,"id",int(Id)); 

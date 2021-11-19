@@ -48,12 +48,14 @@ Please download source files and documentation from <a href="http://dual.sphysic
 #include "JException.h"
 #include "JSphCfgRun.h"
 #include "JSphCpuSingle.h"
+#include "MVCtrlVars.h"
 #ifdef _WITHGPU
   #include "JSphGpuSingle.h"
 #endif
 
 #pragma warning(disable : 4996) //Cancels sprintf() deprecated.
-
+extern int *MVctrls;
+extern int MVctrlSize;
 using namespace std;
 
 JAppInfo AppInfo("DualSPHysics5","v5.0.175","21-02-2021");
@@ -136,6 +138,17 @@ void PrintExceptionLog(const std::string &prefix,const std::string &text,JLog2 *
 //==============================================================================
 //==============================================================================
 int main(int argc, char** argv){
+  ofstream logfile;
+  //logfile.open("/home/richard/testing.log", std::ios_base::app);
+  
+  //logfile << "\nargc: " << argc; 
+  int i;
+  //logfile << "\nargv: ";
+  for(i=1;i<argc;i++)
+  {
+        logfile << argv[i] << " ";
+  }
+  logfile.close();
   int errcode=1;
   //AppInfo.AddNameExtra("Symmetry");    //<vs_syymmetry>
   //AppInfo.AddNameExtra("SaveFtAce");
@@ -154,8 +167,10 @@ int main(int argc, char** argv){
   JLog2 *log=NULL;
   JSphCfgRun cfg;
   try{
+    printf("Loading argc, argb\n");
     cfg.LoadArgv(argc,argv);
-    //cfg.VisuConfig();
+    
+    cfg.VisuConfig();
     if(!cfg.PrintInfo){
       AppInfo.ConfigOutput(cfg.CreateDirs,cfg.CsvSepComa,cfg.DirOut,cfg.DirDataOut);
       AppInfo.LogInit(AppInfo.GetDirOut()+"/Run.out");
@@ -171,6 +186,7 @@ int main(int argc, char** argv){
       if(cfg.Cpu){
         JSphCpuSingle sph;
         sph.Run(appname,&cfg,log);
+        
       }
       #ifdef _WITHGPU
       else{

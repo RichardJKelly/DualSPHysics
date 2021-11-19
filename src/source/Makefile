@@ -1,10 +1,10 @@
 #DualSPHysics GPU/CPU v5.0.164 21-11-2020
 
 #=============== Compilation Options (YES/NO) ===============
-USE_GCC5=NO
+USE_GCC5=YES
 USE_DEBUG=NO
 USE_FAST_MATH=YES
-USE_NATIVE_CPU_OPTIMIZATIONS=NO
+USE_NATIVE_CPU_OPTIMIZATIONS=YES
 COMPILE_VTKLIB=YES
 COMPILE_NUMEXLIB=YES
 COMPILE_CHRONO=YES
@@ -65,7 +65,7 @@ CUDAVER=92
 
 #=============== CUDA toolkit directory (make appropriate for local CUDA installation) ===============
 ifeq ($(CUDAVER),00)
-  DIRTOOLKIT=/usr/local/cuda
+  DIRTOOLKIT=/usr/lib/cuda
 endif
 ifeq ($(CUDAVER),75)
   DIRTOOLKIT=/exports/opt/NVIDIA/cuda-7.5
@@ -74,7 +74,7 @@ ifeq ($(CUDAVER),91)
   DIRTOOLKIT=/exports/opt/NVIDIA/cuda-9.1
 endif
 ifeq ($(CUDAVER),92)
-  DIRTOOLKIT=/exports/opt/NVIDIA/cuda-9.2
+  DIRTOOLKIT=/usr/local/cuda-9.2
 endif
 
 #=============== Select GPU architectures ===============
@@ -112,7 +112,7 @@ endif
 #=============== Files to compile ===============
 OBJXML=JXml.o tinystr.o tinyxml.o tinyxmlerror.o tinyxmlparser.o
 OBJSPHMOTION=JMotion.o JMotionList.o JMotionMov.o JMotionObj.o JMotionPos.o JDsMotion.o
-OBCOMMON=Functions.o FunGeo3d.o FunSphKernelsCfg.o JAppInfo.o JBinaryData.o JCfgRunBase.o JDataArrays.o JException.o JLinearValue.o JLog2.o JObject.o JOutputCsv.o JRadixSort.o JRangeFilter.o JReadDatafile.o JSaveCsv2.o JTimeControl.o randomc.o
+OBCOMMON=Functions.o FunGeo3d.o FunSphKernelsCfg.o JAppInfo.o JBinaryData.o JCfgRunBase.o JDataArrays.o JException.o JLinearValue.o JLog2.o JObject.o JOutputCsv.o JRadixSort.o JRangeFilter.o JReadDatafile.o JSaveCsv2.o JTimeControl.o randomc.o MVCtrlVars.o
 OBCOMMONDSPH=JDsphConfig.o JDsPips.o JPartDataBi4.o JPartDataHead.o JPartFloatBi4.o JPartOutBi4Save.o JCaseCtes.o JCaseEParms.o JCaseParts.o JCaseProperties.o JCaseUserVars.o JCaseVtkOut.o
 OBSPH=JArraysCpu.o JCellDivCpu.o JSphCfgRun.o JComputeMotionRef.o JDsDamping.o JDsGaugeItem.o JDsGaugeSystem.o JDsPartsOut.o JDsSaveDt.o JSphShifting.o JSph.o JDsAccInput.o JSphCpu.o JDsInitialize.o JFtMotionSave.o JSphMk.o JDsPartsInit.o JDsFixedDt.o JDsViscoInput.o JDsOutputTime.o JWaveAwasZsurf.o JWaveSpectrumGpu.o main.o
 OBSPHSINGLE=JCellDivCpuSingle.o JPartsLoad4.o JSphCpuSingle.o

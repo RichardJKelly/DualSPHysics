@@ -35,7 +35,7 @@ class TiXmlNode;
 class JMotionMov : protected JObject
 {
 public:
-  typedef enum{ Null=0,Nulo,CircularSinusoidal,RotationSinusoidal,RectilinearSinusoidal,CircularAce,Circular,RotationFile,RotationAce,Rotation,RectilinearFile,RectilinearAce,Rectilinear,Wait }TpMotionMov; 
+  typedef enum{ Null=0,Nulo,CircularSinusoidal,RotationSinusoidal,RectilinearSinusoidal,CircularAce,Circular,RotationFile,RotationAce,Rotation,RectilinearFile,RectilinearAce,Rectilinear,Wait, MVCtrl }TpMotionMov; 
 
   const unsigned Id;
   const unsigned NextId;
@@ -90,6 +90,18 @@ class JMotionMovRect : public JMotionMovBlock
 public:
   const tdouble3 Vel;
   JMotionMovRect(unsigned id,unsigned nextid,double time,const tdouble3 &vel):JMotionMovBlock("JMotionMovRect",Rectilinear,id,nextid,time),Vel(vel){}
+  void WriteXml(TiXmlNode* node)const;
+};
+
+//==============================================================================
+//##############################################################################
+//==============================================================================
+
+class JMotionMovCtrl : public JMotionMovBlock
+{
+public:
+  const tdouble3 Vel;
+  JMotionMovCtrl(unsigned id,unsigned nextid,double time,const tdouble3 &vel):JMotionMovBlock("JMotionMovCtrl",MVCtrl,id,nextid,time),Vel(vel){}
   void WriteXml(TiXmlNode* node)const;
 };
 

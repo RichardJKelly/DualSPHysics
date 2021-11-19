@@ -148,10 +148,12 @@ const StMotionData& JDsMotion::GetMotionData(unsigned idx)const{
 /// Defines motion for indicated object.
 //==============================================================================
 void JDsMotion::SetMotionData(const StMotionData& d){
+  printf("setting motion data");
   if(d.ref>=GetNumObjects())Run_Exceptioon("Moving object does not exist.");
   StMotionData &m=ObjMotion[d.ref];
   m.type=d.type;
   if(m.type==MOTT_Linear){
+	printf("linear motion set");
     m.linmov=d.linmov;
     m.linvel=d.linvel;
   }
@@ -179,9 +181,11 @@ void JDsMotion::SetMotionDataNone(unsigned idx){
 //==============================================================================
 /// Defines linear motion for indicated object.
 //==============================================================================
+//To Do: I don't think this is actually being used... 
 void JDsMotion::SetMotionDataLin(unsigned idx,const tdouble3 &linmov){
   if(idx<GetNumObjects()){
     //printf("JDsMotion::SetMotionData-> idx:%d tp:%d  motion:(%g,%g,%g)\n",idx,tpmov,simplemov.x,simplemov.y,simplemov.z);
+	printf("setMotionDataLin");
     ObjMotion[idx].type=MOTT_Linear;
     ObjMotion[idx].linmov=linmov;
     ObjMotion[idx].linvel=(LastDt? linmov/LastDt: TDouble3(0));

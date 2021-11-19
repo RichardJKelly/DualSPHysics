@@ -905,8 +905,11 @@ void JSph::LoadConfigVarsExec(){
 /// Loads the case configuration to be executed.
 //==============================================================================
 void JSph::LoadCaseConfig(const JSphCfgRun *cfg){
+  printf("checking for file %s\n", &FileXml);
   if(!fun::FileExists(FileXml))Run_ExceptioonFile("Case configuration was not found.",FileXml);
+  printf("loading file\n");
   JXml xml; xml.LoadFile(FileXml);
+  
   //-Shows pre-processing application generating the XML file.
   Log->Printf("XML-App: %s",xml.GetAttributeStr(xml.GetNodeError("case")->ToElement(),"app",true,"unknown").c_str());
 

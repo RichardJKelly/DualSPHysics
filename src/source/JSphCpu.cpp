@@ -18,6 +18,7 @@
 
 /// \file JSphCpu.cpp \brief Implements the class \ref JSphCpu.
 
+
 #include "JSphCpu.h"
 #include "JCellSearch_inline.h"
 #include "JCellDivCpu.h"
@@ -43,12 +44,19 @@
 #include "JSphBoundCorr.h"
 #include "JSphInOut.h"
 #include "JSphShifting.h"
+#include "MVCtrlVars.h"
+#include <math.h>
+#include <stdlib.h>
+#include <fstream>
+#include <iomanip>
+using namespace std;
 
 #include <climits>
 #ifndef WIN32
 #include <unistd.h>
 #endif
-
+//extern int *MVctrls;
+//extern int MVctrlSize;
 using namespace std;
 
 //==============================================================================
@@ -1278,6 +1286,7 @@ void JSphCpu::UpdatePos(tdouble3 rpos,double movx,double movy,double movz
   }
   //-Keep current position. | Guarda posicion actualizada.
   pos[p]=rpos;
+  
   //-Keep cell and check. | Guarda celda y check.
   if(outrhop || outmove || out){//-Particle out.
     typecode rcode=code[p];
@@ -1595,6 +1604,8 @@ double JSphCpu::DtVariable(bool final){
     //-Saves detailed information about dt in SaveDt object.
     if(SaveDt)SaveDt->AddValues(TimeStep,dt,dt1*CFLnumber,dt2*CFLnumber,AceMax,ViscDtMax,VelMax);
   }
+
+  //printf("\nDT: %f\n",dt) ; 
   return(dt);
 }
 
@@ -1652,41 +1663,179 @@ void JSphCpu::CalcRidp(bool periactive,unsigned np,unsigned pini,unsigned idini,
 void JSphCpu::MoveLinBound(unsigned np,unsigned ini,const tdouble3 &mvpos,const tfloat3 &mvvel
   ,const unsigned *ridp,tdouble3 *pos,unsigned *dcell,tfloat4 *velrhop,typecode *code)const
 {
+  
+  //to do: Need calculated mvpos here
+  //printf("mvpos.x: %f mvpos.y: %f mvpos.z: %f\n",mvpos.x,mvpos.y,mvpos.z);
   const unsigned fin=ini+np;
   for(unsigned id=ini;id<fin;id++){
     const unsigned pid=RidpMove[id];
     if(pid!=UINT_MAX){
       UpdatePos(pos[pid],mvpos.x,mvpos.y,mvpos.z,false,pid,pos,dcell,code);
+        ofstream logfile;
+  	//logfile.open("/home/richard/testing.log", std::ios_base::app);
+  	//logfile << "mvpos.x: " << mvpos.x << "\nmvpos.y: " << mvpos.y << "\nmvpos.z: " << mvpos.z << "\npid: " << pid << "\npos: " << pos << "\ndcell: " << dcell << "/ncode: " <<code <<"\n";
+  	
       velrhop[pid].x=mvvel.x;  velrhop[pid].y=mvvel.y;  velrhop[pid].z=mvvel.z;
     }
   }
+  double xav;
+  double yav;
+  double zav;
+  xav = 0;
+  yav = 0;
+  zav = 0;
+  //printf("Motion Particles Updated: \n");
+  for(unsigned id=ini;id<fin;id++){
+     //printf("Particle: %d x: %f y:%f z:%f\n",id,pos[id].x, pos[id].y, pos[id].z);
+	 xav += pos[id].x;
+	 yav += pos[id].y;
+     zav += pos[id].z;
+  }
+	xav = xav/fin;
+	yav = yav/fin;
+	zav = zav/fin;
+//printf("Average Motion Particle Position: \n x: %f y: %f z: %f\n",xav, yav, zav);
+//to do: put these into global... This is for Motion particles. Can we get mkbound number? 
+}
+
+void JSphCpu::MoveCtrlBound(unsigned np,unsigned ini,const tdouble3 &mvpos,const tfloat3 &mvvel
+  ,const unsigned *ridp,tdouble3 *pos,unsigned *dcell,tfloat4 *velrhop,typecode *code)
+{
+   //const double ddt_p=DtVariable(false);
+  //to do: Need calculated mvpos here. To do that calc distance and direction from floating object first
+  double dt = DtVariable(true);
+  
+  ///printf("MoveCtrlBound\n");
+  //printf("mvpos.x: %f mvpos.y: %f mvpos.z: %f\n",mvpos.x,mvpos.y,mvpos.z);
+  double xav;
+  double yav;
+  double zav;
+  xav = 0;
+  yav = 0;
+  zav = 0;
+  //printf("Motion Particles Updated: \n");
+  const unsigned fin=ini+np;
+  for(unsigned id=ini;id<fin;id++){
+     //printf("Particle: %d x: %f y:%f z:%f\n",id,pos[id].x, pos[id].y, pos[id].z);
+	 xav += pos[id].x;
+	 yav += pos[id].y;
+     zav += pos[id].z;
+  }
+  xav = xav/fin;
+  yav = yav/fin;
+  zav = zav/fin;
+	
+double distance = sqrt(pow(fxav -xav,2)+pow(fyav -yav,2)); //not worried about z componant
+//printf("\ndistance = %f\n",distance);
+double kp = 1;
+double speed = distance*kp;
+double xspeed = speed*(fxav-xav)/distance;
+double yspeed = speed*(fyav-yav)/distance;
+double zspeed = speed*(fzav-zav)/distance;
+	
+  
+  for(unsigned id=ini;id<fin;id++){
+    const unsigned pid=RidpMove[id];
+    if(pid!=UINT_MAX){
+      UpdatePos(pos[pid],xspeed*dt,yspeed*dt,zspeed*dt,false,pid,pos,dcell,code);
+        ofstream logfile;
+      velrhop[pid].x=mvvel.x;  velrhop[pid].y=mvvel.y;  velrhop[pid].z=mvvel.z;//to do: figure out what this line does
+    }
+  }
+
+//printf("Average Motion Particle Position: \n x: %f y: %f z: %f\n",xav, yav, zav);
+//to do: put these into global... This is for Motion particles. Can we get mkbound number? 
 }
 
 //==============================================================================
 /// Applies a matrix movement to a group of particles.
 /// Aplica un movimiento matricial a un conjunto de particulas.
 //==============================================================================
-void JSphCpu::MoveMatBound(unsigned np,unsigned ini,tmatrix4d m,double dt,const unsigned *ridpmv
-  ,tdouble3 *pos,unsigned *dcell,tfloat4 *velrhop,typecode *code,tfloat3 *boundnormal)const
+void JSphCpu::MoveMatBound(unsigned np,unsigned ini,tmatrix4d m,double dt,const unsigned *ridpmv,tdouble3 *pos,unsigned *dcell,tfloat4 *velrhop,typecode *code,tfloat3 *boundnormal)const
 {
-  const unsigned fin=ini+np;
-  for(unsigned id=ini;id<fin;id++){
-    const unsigned pid=RidpMove[id];
-    if(pid!=UINT_MAX){
-      const tdouble3 ps=pos[pid];
-      tdouble3 ps2=MatrixMulPoint(m,ps);
-      if(Simulate2D)ps2.y=ps.y;
-      const double dx=ps2.x-ps.x, dy=ps2.y-ps.y, dz=ps2.z-ps.z;
-      UpdatePos(ps,dx,dy,dz,false,pid,pos,dcell,code);
-      velrhop[pid].x=float(dx/dt);  velrhop[pid].y=float(dy/dt);  velrhop[pid].z=float(dz/dt);
-      //-Computes normal.
-      if(boundnormal){
-        const tdouble3 gs=ps+ToTDouble3(boundnormal[pid]);
-        const tdouble3 gs2=MatrixMulPoint(m,gs);
-        boundnormal[pid]=ToTFloat3(gs2-ps2);
-      }
-    }
-  }
+	//MoveMatBound   (m.count,m.idbegin-CaseNfixed,m.matmov,stepdt,RidpMove,Posc,Dcellc,Velrhopc,Codec,boundnormal)
+	const unsigned fin=ini+np;
+	  double xav;
+	  double yav;
+	  double zav;
+	  xav = 0;
+	  yav = 0;
+	  zav = 0;
+	for(unsigned id=ini;id<fin;id++){
+		 //printf("Particle: %d x: %f y:%f z:%f\n",id,pos[id].x, pos[id].y, pos[id].z);
+		 xav += pos[id].x;
+		 yav += pos[id].y;
+		 zav += pos[id].z;
+	  }
+		xav = xav/fin;
+		yav = yav/fin;
+		zav = zav/fin;
+		printf("Average Rotation Motion Particle Position: \n x: %f y: %f z: %f\n",xav, yav, zav);
+		//printf("TimeStep = %f\n",TimeStep);
+		double distance = sqrt(pow(FtObjs[0].center.x -xav,2)+pow(FtObjs[0].center.y -yav,2)); //not worried about z componant
+		double xcomp = (FtObjs[0].center.x);
+		double ycomp = (FtObjs[0].center.y);
+		printf("Average Floating Particle Position from MOVECtrlBound: \n x: %f y: %f z: %f\n",FtObjs[0].center.x, FtObjs[0].center.y, FtObjs[0].center.z);
+		double ballDirection = atan2(ycomp,xcomp)*180/M_PI;
+		if(ballDirection < 0)ballDirection += 360;
+		double coneDirection = atan2(rpoint2.y-rpoint1.y,rpoint2.x-rpoint1.x)*180/M_PI;
+		if(coneDirection < 0)coneDirection += 360;
+		printf("direction to ball: %f, cone direction: %f\r\n", ballDirection, coneDirection );
+		FILE * directionFile;
+		directionFile = fopen("/home/richard/rotation/direction.log","a");
+		fprintf(directionFile,"%f,%f,%f,%f,%f,%f\r\n",TimeStep,ballDirection,coneDirection,xav,yav,zav);
+		fclose(directionFile);
+		//m.a14 = -1*xav;
+		//m.a24 = -1*yav;
+		//m.a34 = zav;
+		//printf("xcomp = %f, ycomp = %f, rpoint1.x = %f, rpoint1.y = %f, rpoint1.z = %f,rpoint2.x = %f, rpoint2.y = %f, rpoint2.z = %f\n\n",xcomp, ycomp, rpoint1.x, rpoint1.y, rpoint1.z, rpoint2.x, rpoint2.y, rpoint2.z)		printf("|\t%f\t%f\t%f\t%f|\n",m.a11, m.a12, m.a13, m.a14);
+		//printf("|\t%f\t%f\t%f\t%f|\n",m.a21, m.a22, m.a23, m.a24);
+		//printf("|\t%f\t%f\t%f\t%f|\n",m.a31, m.a32, m.a33, m.a34);
+		//printf("|\t%f\t%f\t%f\t%f|\n",m.a41, m.a42, m.a43, m.a44);
+
+		
+if( abs(coneDirection - ballDirection) > .1){
+		tdouble3 tempp = MatrixMulPoint(m,rpoint1);
+		rpoint1 = tempp;
+		tempp = MatrixMulPoint(m, rpoint2);
+		rpoint2 = tempp;
+	  const unsigned fin=ini+np;
+	  for(unsigned id=ini;id<fin;id++){
+		const unsigned pid=RidpMove[id];
+		if(pid!=UINT_MAX){
+			const tdouble3 ps=pos[pid];
+		/*
+		if(TimeStep > .5){
+			ps.x-=xav;
+			ps.y-=yav;
+			ps.z-=zav;
+		}*/
+		tdouble3 ps2=MatrixMulPoint(m,ps);
+		/*
+		if(TimeStep > .5){
+			ps2.x+=xav;
+			ps2.y+=yav;
+			ps2.z+=zav;
+			ps.x+=xav;
+			ps.y+=yav;
+			ps.z+=zav;
+		}*/
+		  if(Simulate2D)ps2.y=ps.y;
+		  const double dx=ps2.x-ps.x, dy=ps2.y-ps.y, dz=ps2.z-ps.z;
+		  UpdatePos(ps,dx,dy,dz,false,pid,pos,dcell,code);
+		  velrhop[pid].x=float(dx/dt);  velrhop[pid].y=float(dy/dt);  velrhop[pid].z=float(dz/dt);
+		  //-Computes normal.
+		  if(boundnormal){
+			const tdouble3 gs=ps+ToTDouble3(boundnormal[pid]);
+			const tdouble3 gs2=MatrixMulPoint(m,gs);
+			boundnormal[pid]=ToTFloat3(gs2-ps2);
+		  }
+		}
+	  }
+
+	  //printf("Motion Particles Updated: \n");
+	  }	
+	//printf('xcomp = %f, ycomp = %f',xcomp, ycomp);
 }
 
 //==============================================================================
@@ -1733,18 +1882,32 @@ void JSphCpu::RunMotion(double stepdt){
     BoundChanged=true;
     const unsigned nref=DsMotion->GetNumObjects();
     for(unsigned ref=0;ref<nref;ref++){
+	  //printf("\nref: %d\n",ref); 
+	  
       const StMotionData& m=DsMotion->GetMotionData(ref);
-      if(m.type==MOTT_Linear){//-Linear movement.
-        if(motsim)MoveLinBound   (m.count,m.idbegin-CaseNfixed,m.linmov,ToTFloat3(m.linvel),RidpMove,Posc,Dcellc,Velrhopc,Codec);
-        //else    MoveLinBoundAce(m.count,m.idbegin-CaseNfixed,m.linmov,ToTFloat3(m.linvel),ToTFloat3(m.linace),RidpMove,Posc,Dcellc,Velrhopc,Acec,Codec);
-      }
-      if(m.type==MOTT_Matrix){//-Matrix movement (for rotations).
-        if(motsim)MoveMatBound   (m.count,m.idbegin-CaseNfixed,m.matmov,stepdt,RidpMove,Posc,Dcellc,Velrhopc,Codec,boundnormal); 
-        //else    MoveMatBoundAce(m.count,m.idbegin-CaseNfixed,m.matmov,m.matmov2,stepdt,RidpMove,Posc,Dcellc,Velrhopc,Acec,Codec);
-      }      
-      //-Applies predefined motion to BoundCorr configuration.
-      if(BoundCorr && BoundCorr->GetUseMotion())BoundCorr->RunMotion(m);
-    }
+	  //printf("\nMKbound: %d\n",m.mkbound); 
+		MVController mv = MVController();
+		//printf("\ngetting ref info: %d\n",mv.isMVctrl(ref) );
+		//printf();
+		/*
+	  if(m.mkbound == 1) {
+		  printf("MOVECtrlBound\n\n");
+		  MoveCtrlBound(m.count,m.idbegin-CaseNfixed,m.linmov,ToTFloat3(m.linvel),RidpMove,Posc,Dcellc,Velrhopc,Codec);
+	  }
+	  else{*/
+      	if(m.type==MOTT_Linear){//-Linear movement. TO DO find where this gets set and make one for MOTT_Ctrl
+        	if(motsim)MoveLinBound   (m.count,m.idbegin-CaseNfixed,m.linmov,ToTFloat3(m.linvel),RidpMove,Posc,Dcellc,Velrhopc,Codec);
+        	//else    MoveLinBoundAce(m.count,m.idbegin-CaseNfixed,m.linmov,ToTFloat3(m.linvel),ToTFloat3(m.linace),RidpMove,Posc,Dcellc,Velrhopc,Acec,Codec);
+      	}
+      	if(m.type==MOTT_Matrix){//-Matrix movement (for rotations).
+			//printf("Matrix movement \n\n");
+        	if(motsim)MoveMatBound   (m.count,m.idbegin-CaseNfixed,m.matmov,stepdt,RidpMove,Posc,Dcellc,Velrhopc,Codec,boundnormal); 
+        	//else    MoveMatBoundAce(m.count,m.idbegin-CaseNfixed,m.matmov,m.matmov2,stepdt,RidpMove,Posc,Dcellc,Velrhopc,Acec,Codec);
+      	}      
+      	//-Applies predefined motion to BoundCorr configuration.
+      	if(BoundCorr && BoundCorr->GetUseMotion())BoundCorr->RunMotion(m);
+	//}
+	}
   }
   //-Management of Multi-Layer Pistons.
   if(MLPistons){

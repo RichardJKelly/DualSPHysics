@@ -167,6 +167,7 @@ unsigned JDsMooredFloatings::GetFloatingByMk(word mkbound)const{
 /// Reads list of mooredfloatings in the XML node.
 //==============================================================================
 void JDsMooredFloatings::ReadXml(const JXml *sxml,TiXmlElement* lis){
+  printf("JDsMooredFloatings::ReadXml\nJDsMooredFloatings::ReadXml\nJDsMooredFloatings::ReadXml\nJDsMooredFloatings::ReadXml\nJDsMooredFloatings::ReadXml\n");
   sxml->CheckElementNames(lis,true,"moordyn savevtk_moorings savecsv_points savevtk_points mooredfloatings");
   //-Loads configuration file for MoorDyn solver.
   if(sxml->CheckElementActive(lis,"moordyn")){

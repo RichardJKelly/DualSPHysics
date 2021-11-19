@@ -1,0 +1,156 @@
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JXml.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include tinystr.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include tinyxml.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include tinyxmlerror.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include tinyxmlparser.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JMotion.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JMotionList.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JMotionMov.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JMotionObj.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JMotionPos.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JDsMotion.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include Functions.cpp 
+Functions.cpp: In function ‘std::string fun::GetCurrentDir()’:
+Functions.cpp:1224:9: warning: ignoring return value of ‘char* getcwd(char*, size_t)’, declared with attribute warn_unused_result [-Wunused-result]
+ 1224 |   getcwd(buff,FILENAME_MAX);
+      |   ~~~~~~^~~~~~~~~~~~~~~~~~~
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include FunGeo3d.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include FunSphKernelsCfg.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JAppInfo.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JBinaryData.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JCfgRunBase.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JDataArrays.cpp 
+JDataArrays.cpp: In static member function ‘static byte* JDataArrays::NewArrayByte(unsigned int, bool, byte)’:
+JDataArrays.cpp:454:1: warning: control reaches end of non-void function [-Wreturn-type]
+  454 | }
+      | ^
+JDataArrays.cpp: In static member function ‘static word* JDataArrays::NewArrayWord(unsigned int, bool, word)’:
+JDataArrays.cpp:471:1: warning: control reaches end of non-void function [-Wreturn-type]
+  471 | }
+      | ^
+JDataArrays.cpp: In static member function ‘static unsigned int* JDataArrays::NewArrayUint(unsigned int, bool, unsigned int)’:
+JDataArrays.cpp:488:1: warning: control reaches end of non-void function [-Wreturn-type]
+  488 | }
+      | ^
+JDataArrays.cpp: In static member function ‘static int* JDataArrays::NewArrayInt(unsigned int, bool, int)’:
+JDataArrays.cpp:505:1: warning: control reaches end of non-void function [-Wreturn-type]
+  505 | }
+      | ^
+JDataArrays.cpp: In static member function ‘static float* JDataArrays::NewArrayFloat(unsigned int, bool, float)’:
+JDataArrays.cpp:522:1: warning: control reaches end of non-void function [-Wreturn-type]
+  522 | }
+      | ^
+JDataArrays.cpp: In static member function ‘static double* JDataArrays::NewArrayDouble(unsigned int, bool, double)’:
+JDataArrays.cpp:539:1: warning: control reaches end of non-void function [-Wreturn-type]
+  539 | }
+      | ^
+JDataArrays.cpp: In static member function ‘static tuint3* JDataArrays::NewArrayUint3(unsigned int, bool, tuint3)’:
+JDataArrays.cpp:556:1: warning: control reaches end of non-void function [-Wreturn-type]
+  556 | }
+      | ^
+JDataArrays.cpp: In static member function ‘static tint3* JDataArrays::NewArrayInt3(unsigned int, bool, tint3)’:
+JDataArrays.cpp:573:1: warning: control reaches end of non-void function [-Wreturn-type]
+  573 | }
+      | ^
+JDataArrays.cpp: In static member function ‘static tfloat3* JDataArrays::NewArrayFloat3(unsigned int, bool, tfloat3)’:
+JDataArrays.cpp:590:1: warning: control reaches end of non-void function [-Wreturn-type]
+  590 | }
+      | ^
+JDataArrays.cpp: In static member function ‘static tdouble3* JDataArrays::NewArrayDouble3(unsigned int, bool, tdouble3)’:
+JDataArrays.cpp:607:1: warning: control reaches end of non-void function [-Wreturn-type]
+  607 | }
+      | ^
+JDataArrays.cpp: In static member function ‘static unsigned int* JDataArrays::NewArraySeqUint(unsigned int, unsigned int, unsigned int)’:
+JDataArrays.cpp:624:1: warning: control reaches end of non-void function [-Wreturn-type]
+  624 | }
+      | ^
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JException.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JLinearValue.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JLog2.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JObject.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JOutputCsv.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JRadixSort.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JRangeFilter.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JReadDatafile.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JSaveCsv2.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JTimeControl.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include randomc.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JDsphConfig.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JDsPips.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JPartDataBi4.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JPartDataHead.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JPartFloatBi4.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JPartOutBi4Save.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JCaseCtes.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JCaseEParms.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JCaseParts.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JCaseProperties.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JCaseUserVars.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JCaseVtkOut.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JArraysCpu.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JCellDivCpu.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JSphCfgRun.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JComputeMotionRef.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JDsDamping.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JDsGaugeItem.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JDsGaugeSystem.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JDsPartsOut.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JDsSaveDt.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JSphShifting.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JSph.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JDsAccInput.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JSphCpu.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JDsInitialize.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JFtMotionSave.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JSphMk.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JDsPartsInit.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JDsFixedDt.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JDsViscoInput.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JDsOutputTime.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JWaveAwasZsurf.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JWaveSpectrumGpu.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include main.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JCellDivCpuSingle.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JPartsLoad4.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JSphCpuSingle.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include FunctionsCuda.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JObjectGpu.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JArraysGpu.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JDebugSphGpu.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JCellDivGpu.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JSphGpu.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JCellDivGpuSingle.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JSphGpuSingle.cpp 
+nvcc -D_GLIBCXX_USE_CXX11_ABI=0 -c  -gencode=arch=compute_30,code=\"sm_30,compute_30\" -gencode=arch=compute_35,code=\"sm_35,compute_35\" -gencode=arch=compute_50,code=\"sm_50,compute_50\" -gencode=arch=compute_52,code=\"sm_52,compute_52\" -gencode=arch=compute_61,code=\"sm_61,compute_61\" -gencode=arch=compute_70,code=\"sm_70,compute_70\" -O3 -ccbin g++ -use_fast_math JCellDivGpu_ker.cu
+nvcc -D_GLIBCXX_USE_CXX11_ABI=0 -c  -gencode=arch=compute_30,code=\"sm_30,compute_30\" -gencode=arch=compute_35,code=\"sm_35,compute_35\" -gencode=arch=compute_50,code=\"sm_50,compute_50\" -gencode=arch=compute_52,code=\"sm_52,compute_52\" -gencode=arch=compute_61,code=\"sm_61,compute_61\" -gencode=arch=compute_70,code=\"sm_70,compute_70\" -O3 -ccbin g++ -use_fast_math JCellDivGpuSingle_ker.cu
+nvcc -D_GLIBCXX_USE_CXX11_ABI=0 -c  -gencode=arch=compute_30,code=\"sm_30,compute_30\" -gencode=arch=compute_35,code=\"sm_35,compute_35\" -gencode=arch=compute_50,code=\"sm_50,compute_50\" -gencode=arch=compute_52,code=\"sm_52,compute_52\" -gencode=arch=compute_61,code=\"sm_61,compute_61\" -gencode=arch=compute_70,code=\"sm_70,compute_70\" -O3 -ccbin g++ -use_fast_math JDsPips_ker.cu
+nvcc -D_GLIBCXX_USE_CXX11_ABI=0 -c  -gencode=arch=compute_30,code=\"sm_30,compute_30\" -gencode=arch=compute_35,code=\"sm_35,compute_35\" -gencode=arch=compute_50,code=\"sm_50,compute_50\" -gencode=arch=compute_52,code=\"sm_52,compute_52\" -gencode=arch=compute_61,code=\"sm_61,compute_61\" -gencode=arch=compute_70,code=\"sm_70,compute_70\" -O3 -ccbin g++ -use_fast_math JDsGauge_ker.cu
+nvcc -D_GLIBCXX_USE_CXX11_ABI=0 -c  -gencode=arch=compute_30,code=\"sm_30,compute_30\" -gencode=arch=compute_35,code=\"sm_35,compute_35\" -gencode=arch=compute_50,code=\"sm_50,compute_50\" -gencode=arch=compute_52,code=\"sm_52,compute_52\" -gencode=arch=compute_61,code=\"sm_61,compute_61\" -gencode=arch=compute_70,code=\"sm_70,compute_70\" -O3 -ccbin g++ -use_fast_math JReduSum_ker.cu
+nvcc -D_GLIBCXX_USE_CXX11_ABI=0 -c  -gencode=arch=compute_30,code=\"sm_30,compute_30\" -gencode=arch=compute_35,code=\"sm_35,compute_35\" -gencode=arch=compute_50,code=\"sm_50,compute_50\" -gencode=arch=compute_52,code=\"sm_52,compute_52\" -gencode=arch=compute_61,code=\"sm_61,compute_61\" -gencode=arch=compute_70,code=\"sm_70,compute_70\" -O3 -ccbin g++ -use_fast_math JSphShifting_ker.cu
+nvcc -D_GLIBCXX_USE_CXX11_ABI=0 -c  -gencode=arch=compute_30,code=\"sm_30,compute_30\" -gencode=arch=compute_35,code=\"sm_35,compute_35\" -gencode=arch=compute_50,code=\"sm_50,compute_50\" -gencode=arch=compute_52,code=\"sm_52,compute_52\" -gencode=arch=compute_61,code=\"sm_61,compute_61\" -gencode=arch=compute_70,code=\"sm_70,compute_70\" -O3 -ccbin g++ -use_fast_math JDsAccInput_ker.cu
+nvcc -D_GLIBCXX_USE_CXX11_ABI=0 -c  -gencode=arch=compute_30,code=\"sm_30,compute_30\" -gencode=arch=compute_35,code=\"sm_35,compute_35\" -gencode=arch=compute_50,code=\"sm_50,compute_50\" -gencode=arch=compute_52,code=\"sm_52,compute_52\" -gencode=arch=compute_61,code=\"sm_61,compute_61\" -gencode=arch=compute_70,code=\"sm_70,compute_70\" -O3 -ccbin g++ -use_fast_math JSphGpu_ker.cu
+nvcc -D_GLIBCXX_USE_CXX11_ABI=0 -c  -gencode=arch=compute_30,code=\"sm_30,compute_30\" -gencode=arch=compute_35,code=\"sm_35,compute_35\" -gencode=arch=compute_50,code=\"sm_50,compute_50\" -gencode=arch=compute_52,code=\"sm_52,compute_52\" -gencode=arch=compute_61,code=\"sm_61,compute_61\" -gencode=arch=compute_70,code=\"sm_70,compute_70\" -O3 -ccbin g++ -use_fast_math JSphGpuSimple_ker.cu
+nvcc -D_GLIBCXX_USE_CXX11_ABI=0 -c  -gencode=arch=compute_30,code=\"sm_30,compute_30\" -gencode=arch=compute_35,code=\"sm_35,compute_35\" -gencode=arch=compute_50,code=\"sm_50,compute_50\" -gencode=arch=compute_52,code=\"sm_52,compute_52\" -gencode=arch=compute_61,code=\"sm_61,compute_61\" -gencode=arch=compute_70,code=\"sm_70,compute_70\" -O3 -ccbin g++ -use_fast_math JWaveOrder2_ker.cu
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JMLPistonsGpu.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JRelaxZonesGpu.cpp 
+nvcc -D_GLIBCXX_USE_CXX11_ABI=0 -c  -gencode=arch=compute_30,code=\"sm_30,compute_30\" -gencode=arch=compute_35,code=\"sm_35,compute_35\" -gencode=arch=compute_50,code=\"sm_50,compute_50\" -gencode=arch=compute_52,code=\"sm_52,compute_52\" -gencode=arch=compute_61,code=\"sm_61,compute_61\" -gencode=arch=compute_70,code=\"sm_70,compute_70\" -O3 -ccbin g++ -use_fast_math JRelaxZone_ker.cu
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JChronoObjects.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JDsMooredFloatings.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JDsFtForcePoints.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JSphCpu_InOut.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JSphCpuSingle_InOut.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JSphBoundCorr.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JSphInOut.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JSphInOutZone.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JSphInOutGridData.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JSphInOutPoints.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JSphInOutVel.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JSphInOutVelAwas.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JSphInOutZsurf.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JSimpleNeigs.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JSphGpuSingle_InOut.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JPartNormalData.cpp 
+g++ -c -O3 -fopenmp -D_WITHGPU -std=c++0x -ffast-math -D_GLIBCXX_USE_CXX11_ABI=0 -I./ -I/usr/local/cuda-9.2/include JNormalsMarrone.cpp 
+g++ JXml.o tinystr.o tinyxml.o tinyxmlerror.o tinyxmlparser.o JMotion.o JMotionList.o JMotionMov.o JMotionObj.o JMotionPos.o JDsMotion.o Functions.o FunGeo3d.o FunSphKernelsCfg.o JAppInfo.o JBinaryData.o JCfgRunBase.o JDataArrays.o JException.o JLinearValue.o JLog2.o JObject.o JOutputCsv.o JRadixSort.o JRangeFilter.o JReadDatafile.o JSaveCsv2.o JTimeControl.o randomc.o JDsphConfig.o JDsPips.o JPartDataBi4.o JPartDataHead.o JPartFloatBi4.o JPartOutBi4Save.o JCaseCtes.o JCaseEParms.o JCaseParts.o JCaseProperties.o JCaseUserVars.o JCaseVtkOut.o JArraysCpu.o JCellDivCpu.o JSphCfgRun.o JComputeMotionRef.o JDsDamping.o JDsGaugeItem.o JDsGaugeSystem.o JDsPartsOut.o JDsSaveDt.o JSphShifting.o JSph.o JDsAccInput.o JSphCpu.o JDsInitialize.o JFtMotionSave.o JSphMk.o JDsPartsInit.o JDsFixedDt.o JDsViscoInput.o JDsOutputTime.o JWaveAwasZsurf.o JWaveSpectrumGpu.o main.o JCellDivCpuSingle.o JPartsLoad4.o JSphCpuSingle.o FunctionsCuda.o JObjectGpu.o  JArraysGpu.o JDebugSphGpu.o JCellDivGpu.o JSphGpu.o  JCellDivGpuSingle.o JSphGpuSingle.o JCellDivGpu_ker.o JCellDivGpuSingle_ker.o JDsPips_ker.o JDsGauge_ker.o JReduSum_ker.o JSphShifting_ker.o JDsAccInput_ker.o JSphGpu_ker.o JSphGpuSimple_ker.o JWaveOrder2_ker.o JMLPistonsGpu.o JRelaxZonesGpu.o JRelaxZone_ker.o JChronoObjects.o JDsMooredFloatings.o JDsFtForcePoints.o JSphCpu_InOut.o JSphCpuSingle_InOut.o JSphBoundCorr.o JSphInOut.o JSphInOutZone.o JSphInOutGridData.o JSphInOutPoints.o JSphInOutVel.o JSphInOutVelAwas.o JSphInOutZsurf.o JSimpleNeigs.o JSphGpuSingle_InOut.o JPartNormalData.o JNormalsMarrone.o -fopenmp -lgomp -D_GLIBCXX_USE_CXX11_ABI=0 -L/usr/local/cuda-9.2/lib64 -lcudart_static -ldl -lrt -o ../../bin/linux/DualSPHysics5.0_linux64 -L./ -L../lib/linux_gcc -ljvtklib_64 -ljnumexlib_64 -ldsphchrono -lChronoEngine  -lChronoEngine_parallel -ljwavegen_64 -ldsphmoordyn_64
+rm -rf *.o
+  --- Compiled Release GPU version ---

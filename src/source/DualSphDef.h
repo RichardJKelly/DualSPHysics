@@ -212,7 +212,8 @@
 typedef enum{ 
   MOTT_None=0,    ///<No movement.
   MOTT_Linear=1,  ///<Linear movement.
-  MOTT_Matrix=2   ///<Matrix movement (for rotations).
+  MOTT_Matrix=2,   ///<Matrix movement (for rotations).
+  MOTT_Ctrl = 3   ///<for user defined complex movement
 }TpMotionType;   
 
 ///Structure with the information for moving particles (lineal and matrix movement).

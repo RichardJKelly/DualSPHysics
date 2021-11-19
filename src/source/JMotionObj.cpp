@@ -77,6 +77,7 @@ void JMotionMovActive::ConfigData(){
   Vel=TDouble3(0);  VelAng=0;  Phase=TDouble3(0);  PhaseUni=0;
   switch(Mov->Type){
     case JMotionMov::Rectilinear:           Vel=((JMotionMovRect*)Mov)->Vel;            break;
+	case JMotionMov::MVCtrl:           		Vel=((JMotionMovCtrl*)Mov)->Vel;            break;
     case JMotionMov::RectilinearAce:        Vel=((JMotionMovRectAce*)Mov)->Vel;         break;
     case JMotionMov::Rotation:              VelAng=((JMotionMovRot*)Mov)->VelAng;       break;
     case JMotionMov::RotationAce:           VelAng=((JMotionMovRotAce*)Mov)->VelAng;    break;
@@ -427,6 +428,13 @@ bool JMotionObj::ProcesTime(double timestep,double dt,JMotionObj** lismov,unsign
               modif=true;
 //            printf("***JMotionMov::Rectilinear\n");
             }break;
+		    case JMotionMov::MVCtrl:{
+              const JMotionMovCtrl *mv=(JMotionMovCtrl*)mov;
+              double t=(amov->Flash? -mv->Time: dtmov);
+              ModPos.Move(TDouble3(mv->Vel.x*t,mv->Vel.y*t,mv->Vel.z*t));//JMotionMov object. 
+              modif=true;
+            printf("***JMotionMov::JMotionMovCtrl\n");
+            }break;
             case JMotionMov::RectilinearAce:{
               const JMotionMovRectAce *mv=(JMotionMovRectAce*)mov;
               double t=(amov->Flash? -mv->Time: dtmov);
@@ -626,7 +634,12 @@ void JMotionObj::CopyConfigMovs(JMotion &mot)const{
       case JMotionMov::Rectilinear:{
         JMotionMovRect *mv=(JMotionMovRect*)Movs[c];
         mot.MovAddRectilinear(Id,mv->Id,mv->NextId,mv->Time,mv->Vel);
-      }break; 
+      }break;
+	  case JMotionMov::MVCtrl:{
+        JMotionMovCtrl *mv=(JMotionMovCtrl*)Movs[c];
+        mot.MovAddCtrl(Id,mv->Id,mv->NextId,mv->Time,mv->Vel);
+		printf("MVCtrl ID: %d ",Id);
+      }break;
       case JMotionMov::RectilinearAce:{
         JMotionMovRectAce *mv=(JMotionMovRectAce*)Movs[c];
         mot.MovAddRectilinearAce(Id,mv->Id,mv->NextId,mv->Time,mv->Ace,mv->Vel,mv->VelPrev);

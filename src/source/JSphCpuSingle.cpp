@@ -18,6 +18,7 @@
 
 /// \file JSphCpuSingle.cpp \brief Implements the class \ref JSphCpuSingle.
 
+#include "MVCtrlVars.h"
 #include "JSphCpuSingle.h"
 #include "JCellDivCpuSingle.h"
 #include "JArraysCpu.h"
@@ -92,8 +93,10 @@ void JSphCpuSingle::UpdateMaxValues(){
 //==============================================================================
 void JSphCpuSingle::LoadConfig(JSphCfgRun *cfg){
   //-Load OpenMP configuraction. | Carga configuracion de OpenMP.
+  //printf("ConfigOmp\nConfigOmp\nConfigOmp\nConfigOmp\nConfigOmp\n");
   ConfigOmp(cfg);
   //-Load basic general configuraction. | Carga configuracion basica general.
+  //printf("JSphLoadConfig\nJSphLoadConfig\nJSphLoadConfig\nJSphLoadConfig\nJSphLoadConfig\nJSphLoadConfig\n");
   JSph::LoadConfig(cfg);
   //-Checks compatibility of selected options.
   Log->Print("**Special case configuration is loaded");
@@ -884,6 +887,7 @@ void JSphCpuSingle::FtSumExternalForces(unsigned cf,tfloat3 &face,tfloat3 &fomeg
 /// Procesa floating objects.
 //==============================================================================
 void JSphCpuSingle::RunFloating(double dt,bool predictor){
+  //printf("JSphCpuSingle::RunFloating\nJSphCpuSingle::RunFloating\nJSphCpuSingle::RunFloating\nJSphCpuSingle::RunFloating\n");
   if(TimeStep>=FtPause){//-Operator >= is used because when FtPause=0 in symplectic-predictor, code would not enter here. | Se usa >= pq si FtPause es cero en symplectic-predictor no entraria.
     TmcStart(Timers,TMC_SuFloating);
     //-Initialises forces of floatings.
@@ -954,7 +958,10 @@ void JSphCpuSingle::RunFloating(double dt,bool predictor){
         }
       }
 
-      //-Stores floating data.
+
+      //to-do: put these into global.
+	  //-Stores floating data.
+	  
       if(!predictor){
         FtObjs[cf].center=(PeriActive? UpdatePeriodicPos(fcenter): fcenter);
         FtObjs[cf].angles=ToTFloat3(ToTDouble3(FtObjs[cf].angles)+ToTDouble3(fomega)*dt);
@@ -1016,9 +1023,12 @@ void JSphCpuSingle::Run(std::string appname,JSphCfgRun *cfg,JLog2 *log){
 
   //-Load parameters and values of input. | Carga de parametros y datos de entrada.
   //--------------------------------------------------------------------------------
+  //printf("loadconfig\nloadconfig\nloadconfig\nloadconfig\nloadconfig\n");
   LoadConfig(cfg);
+  //printf("loadParticles\nloadParticles\nloadParticles\nloadParticles\nloadParticles\n");
   LoadCaseParticles();
   VisuConfig();
+  //printf("configDomain\nconfigDomain\nconfigDomain\nconfigDomain\nconfigDomain\n");
   ConfigDomain();
   ConfigRunMode(cfg);
   VisuParticleSummary();
@@ -1039,6 +1049,7 @@ void JSphCpuSingle::Run(std::string appname,JSphCfgRun *cfg,JLog2 *log){
 
   //-Main Loop.
   //------------
+  //printf("Main Loop\nMain Loop\nMain Loop\nMain Loop\nMain Loop\n");
   JTimeControl tc("30,60,300,600");//-Shows information at 0.5, 1, 5 y 10 minutes (before first PART).
   bool partoutstop=false;
   TimerSim.Start();
@@ -1047,6 +1058,7 @@ void JSphCpuSingle::Run(std::string appname,JSphCfgRun *cfg,JLog2 *log){
   if(DsPips)ComputePips(true);
   PrintHeadPart();
   while(TimeStep<TimeMax){
+    printf("TimeStep = %f\n",TimeStep);
     InterStep=(TStep==STEP_Symplectic? INTERSTEP_SymPredictor: INTERSTEP_Verlet);
     if(ViscoTime)Visco=ViscoTime->GetVisco(float(TimeStep));
     double stepdt=ComputeStep();

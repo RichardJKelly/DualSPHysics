@@ -124,6 +124,7 @@ public:
   void MovAddWait(unsigned objid,unsigned id,unsigned nextid,double time);
   void MovAddTeleport(unsigned objid,unsigned id,unsigned nextid,const tdouble3 &mpos);
   void MovAddRectilinear(unsigned objid,unsigned id,unsigned nextid,double time,const tdouble3 &vel);
+  void MovAddCtrl(unsigned objid,unsigned id,unsigned nextid,double time,const tdouble3 &vel);
   void MovAddRectilinearAce(unsigned objid,unsigned id,unsigned nextid,double time,const tdouble3 &ace,const tdouble3 &vel,bool velpre);
   void MovAddRotation(unsigned objid,unsigned id,unsigned nextid,double time,bool angdegrees,const tdouble3 &axisp1,const tdouble3 &axisp2,double velang,bool useangdegrees=true);
   void MovAddRotationAce(unsigned objid,unsigned id,unsigned nextid,double time,bool angdegrees,const tdouble3 &axisp1,const tdouble3 &axisp2,double aceang,double velang,bool velpre,bool useangdegrees=true);

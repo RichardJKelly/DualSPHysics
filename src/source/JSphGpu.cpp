@@ -45,6 +45,10 @@
 #include "JSphShifting.h"
 #include "JDataArrays.h"
 #include "JVtkLib.h"
+#include <iostream>
+#include <fstream>
+
+
 
 #include <climits>
 #ifndef WIN32
@@ -1059,6 +1063,10 @@ void JSphGpu::RunShifting(double dt){
 /// Calcula movimiento predefinido de boundary particles.
 //==============================================================================
 void JSphGpu::CalcMotion(double stepdt){
+  ofstream logfile;
+  logfile.open("/home/richard/testing.log", std::ios_base::app);
+  logfile << "CalcMotion\n";
+  logfile.close();
   TmgStart(Timers,TMG_SuMotion);
   JSph::CalcMotion(stepdt);
   TmgStop(Timers,TMG_SuMotion);
@@ -1069,6 +1077,10 @@ void JSphGpu::CalcMotion(double stepdt){
 /// Procesa movimiento de boundary particles.
 //==============================================================================
 void JSphGpu::RunMotion(double stepdt){
+  ofstream logfile;
+  logfile.open("/home/richard/testing.log", std::ios_base::app);
+  logfile << "RuningMotion\n";
+  //logfile.close();
   TmgStart(Timers,TMG_SuMotion);
   float3 *boundnormal=NULL;
   boundnormal=BoundNormalg;
@@ -1084,7 +1096,11 @@ void JSphGpu::RunMotion(double stepdt){
     for(unsigned ref=0;ref<nref;ref++){
       const StMotionData& m=DsMotion->GetMotionData(ref);
       if(m.type==MOTT_Linear){//-Linear movement.
-        if(motsim)cusph::MoveLinBound   (PeriActive,m.count,m.idbegin-CaseNfixed,m.linmov,ToTFloat3(m.linvel),RidpMoveg,Posxyg,Poszg,Dcellg,Velrhopg,Codeg);
+        if(motsim){
+        	cusph::MoveLinBound   (PeriActive,m.count,m.idbegin-CaseNfixed,m.linmov,ToTFloat3(m.linvel),RidpMoveg,Posxyg,Poszg,Dcellg,Velrhopg,Codeg);
+        	logfile << "MoveLineBounds("<< PeriActive << "," <<m.count << "," << m.idbegin-CaseNfixed << ","  <<RidpMoveg << "," <<Posxyg << "," << Poszg << "," << Dcellg <<"," <<Velrhopg << "," << Codeg <<");\n";
+        	
+        }
         //else    cusph::MoveLinBoundAce(PeriActive,m.count,m.idbegin-CaseNfixed,m.linmov,ToTFloat3(m.linvel),ToTFloat3(m.linace),RidpMoveg,Posxyg,Poszg,Dcellg,Velrhopg,Codeg);
       }
       if(m.type==MOTT_Matrix){//-Matrix movement (for rotations).
