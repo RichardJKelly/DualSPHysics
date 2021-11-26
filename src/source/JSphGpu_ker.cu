@@ -18,6 +18,7 @@
 
 /// \file JSphGpu_ker.cu \brief Implements functions and CUDA kernels for the Particle Interaction and System Update.
 
+//#include "JSphGpu.h"
 #include "JSphGpu_ker.h"
 #include "Functions.h"
 #include "FunctionsCuda.h"
@@ -26,6 +27,8 @@
 #include <math_constants.h>
 //:#include "JDgKerPrint.h"
 //:#include "JDgKerPrint_ker.h"
+#include <stdio.h>
+#include "MVCtrlVars.h"
 
 #pragma warning(disable : 4267) //Cancels "warning C4267: conversion from 'size_t' to 'int', possible loss of data"
 #pragma warning(disable : 4244) //Cancels "warning C4244: conversion from 'unsigned __int64' to 'unsigned int', possible loss of data"
@@ -1780,6 +1783,7 @@ void MoveLinBound(byte periactive,unsigned np,unsigned ini,tdouble3 mvpos,tfloat
 template<bool periactive,bool simulate2d> __global__ void KerMoveMatBound(unsigned n,unsigned ini,tmatrix4d m,double dt
   ,const unsigned *ridpmv,double2 *posxy,double *posz,unsigned *dcell,float4 *velrhop,typecode *code,float3 *boundnormal)
 {
+  //printf("KerMoveMatBound\r\n");
   unsigned p=blockIdx.x*blockDim.x + threadIdx.x; //-Number of particle.
   if(p<n){
     int pid=ridpmv[p+ini];
@@ -1819,14 +1823,31 @@ template<bool periactive,bool simulate2d> __global__ void KerMoveMatBound(unsign
 void MoveMatBound(byte periactive,bool simulate2d,unsigned np,unsigned ini,tmatrix4d m,double dt
   ,const unsigned *ridpmv,double2 *posxy,double *posz,unsigned *dcell,float4 *velrhop,typecode *code,float3 *boundnormal)
 {
-  dim3 sgrid=GetSimpleGridSize(np,SPHBSIZE);
-  if(periactive){ const bool peri=true;
-    if(simulate2d)KerMoveMatBound<peri,true>  <<<sgrid,SPHBSIZE>>> (np,ini,m,dt,ridpmv,posxy,posz,dcell,velrhop,code,boundnormal);
-    else          KerMoveMatBound<peri,false> <<<sgrid,SPHBSIZE>>> (np,ini,m,dt,ridpmv,posxy,posz,dcell,velrhop,code,boundnormal);
-  }
-  else{ const bool peri=false;
-    if(simulate2d)KerMoveMatBound<peri,true>  <<<sgrid,SPHBSIZE>>> (np,ini,m,dt,ridpmv,posxy,posz,dcell,velrhop,code,boundnormal);
-    else          KerMoveMatBound<peri,false> <<<sgrid,SPHBSIZE>>> (np,ini,m,dt,ridpmv,posxy,posz,dcell,velrhop,code,boundnormal);
+  //printf("%f\r\n",rpoint2.y);
+  double coneDirection = atan2(rpoint2.y-rpoint1.y,rpoint2.x-rpoint1.x)*180/M_PI;
+  //double distance = sqrt(pow(FtObjs[0].center.x -xav,2)+pow(FtObjs[0].center.y -yav,2)); //not worried about z componant
+  //double xcomp = (fcen[0].x);
+  //double ycomp = (fcen[0].y);
+  //double ballDirection = atan2(ycomp,xcomp)*180/M_PI;
+  //if(ballDirection < 0)ballDirection += 360;
+  if(coneDirection < 0)coneDirection += 360;
+  //printf("coneDirection: %f, ballDirection:%f\r\n", coneDirection,ballDirection);
+  printf("coneDirection: %f \r\n", coneDirection);
+  if(coneDirection > 225)
+  {
+    tdouble3 tempp = MatrixMulPoint(m,rpoint1);
+    rpoint1 = tempp;
+    tempp = MatrixMulPoint(m, rpoint2);
+    rpoint2 = tempp;
+    dim3 sgrid=GetSimpleGridSize(np,SPHBSIZE);
+    if(periactive){ const bool peri=true;
+      if(simulate2d)KerMoveMatBound<peri,true>  <<<sgrid,SPHBSIZE>>> (np,ini,m,dt,ridpmv,posxy,posz,dcell,velrhop,code,boundnormal);
+      else          KerMoveMatBound<peri,false> <<<sgrid,SPHBSIZE>>> (np,ini,m,dt,ridpmv,posxy,posz,dcell,velrhop,code,boundnormal);
+    }
+    else{ const bool peri=false;
+      if(simulate2d)KerMoveMatBound<peri,true>  <<<sgrid,SPHBSIZE>>> (np,ini,m,dt,ridpmv,posxy,posz,dcell,velrhop,code,boundnormal);
+      else          KerMoveMatBound<peri,false> <<<sgrid,SPHBSIZE>>> (np,ini,m,dt,ridpmv,posxy,posz,dcell,velrhop,code,boundnormal);
+    }
   }
 }
 
