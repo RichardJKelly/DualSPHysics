@@ -1821,19 +1821,20 @@ template<bool periactive,bool simulate2d> __global__ void KerMoveMatBound(unsign
 /// Aplica un movimiento matricial a un conjunto de particulas.
 //==============================================================================
 void MoveMatBound(byte periactive,bool simulate2d,unsigned np,unsigned ini,tmatrix4d m,double dt
-  ,const unsigned *ridpmv,double2 *posxy,double *posz,unsigned *dcell,float4 *velrhop,typecode *code,float3 *boundnormal)
+  ,const unsigned *ridpmv,double2 *posxy,double *posz,unsigned *dcell,float4 *velrhop,typecode *code,float3 *boundnormal, tdouble3 ballCentre)
 {
   //printf("%f\r\n",rpoint2.y);
+  //printf("x=%f, y=%f\r\n",ballCentre.x,ballCentre.y);
   double coneDirection = atan2(rpoint2.y-rpoint1.y,rpoint2.x-rpoint1.x)*180/M_PI;
   //double distance = sqrt(pow(FtObjs[0].center.x -xav,2)+pow(FtObjs[0].center.y -yav,2)); //not worried about z componant
   //double xcomp = (fcen[0].x);
   //double ycomp = (fcen[0].y);
-  //double ballDirection = atan2(ycomp,xcomp)*180/M_PI;
-  //if(ballDirection < 0)ballDirection += 360;
+   double ballDirection = atan2(ballCentre.y,ballCentre.x)*180/M_PI;
+  if(ballDirection < 0)ballDirection += 360;
   if(coneDirection < 0)coneDirection += 360;
   //printf("coneDirection: %f, ballDirection:%f\r\n", coneDirection,ballDirection);
-  printf("coneDirection: %f \r\n", coneDirection);
-  if(coneDirection > 225)
+  printf("coneDirection: %f ballDirection: %f \r\n", coneDirection, ballDirection);
+  if(coneDirection - ballDirection  > .1)
   {
     tdouble3 tempp = MatrixMulPoint(m,rpoint1);
     rpoint1 = tempp;

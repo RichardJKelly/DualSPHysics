@@ -1104,7 +1104,8 @@ void JSphGpu::RunMotion(double stepdt){
         //else    cusph::MoveLinBoundAce(PeriActive,m.count,m.idbegin-CaseNfixed,m.linmov,ToTFloat3(m.linvel),ToTFloat3(m.linace),RidpMoveg,Posxyg,Poszg,Dcellg,Velrhopg,Codeg);
       }
       if(m.type==MOTT_Matrix){//-Matrix movement (for rotations).
-        if(motsim)cusph::MoveMatBound   (PeriActive,Simulate2D,m.count,m.idbegin-CaseNfixed,m.matmov,stepdt,RidpMoveg,Posxyg,Poszg,Dcellg,Velrhopg,Codeg,boundnormal);
+        //printf("x=%f, y=%f\r\n",FtObjs[0].center.x,FtObjs[0].center.y);
+        if(motsim)cusph::MoveMatBound   (PeriActive,Simulate2D,m.count,m.idbegin-CaseNfixed,m.matmov,stepdt,RidpMoveg,Posxyg,Poszg,Dcellg,Velrhopg,Codeg,boundnormal, FtObjs[0].center);
         //else    cusph::MoveMatBoundAce(PeriActive,Simulate2D,m.count,m.idbegin-CaseNfixed,m.matmov,m.matmov2,stepdt,RidpMoveg,Posxyg,Poszg,Dcellg,Velrhopg,Codeg);
       }      
       //-Applies predefined motion to BoundCorr configuration.

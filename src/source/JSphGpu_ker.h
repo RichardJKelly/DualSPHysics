@@ -232,7 +232,7 @@ void CalcRidp(bool periactive,unsigned np,unsigned pini,unsigned idini,unsigned 
 void MoveLinBound(byte periactive,unsigned np,unsigned ini,tdouble3 mvpos,tfloat3 mvvel
   ,const unsigned *ridp,double2 *posxy,double *posz,unsigned *dcell,float4 *velrhop,typecode *code);
 void MoveMatBound(byte periactive,bool simulate2d,unsigned np,unsigned ini,tmatrix4d m,double dt
-  ,const unsigned *ridpmv,double2 *posxy,double *posz,unsigned *dcell,float4 *velrhop,typecode *code,float3 *boundnormal);
+  ,const unsigned *ridpmv,double2 *posxy,double *posz,unsigned *dcell,float4 *velrhop,typecode *code,float3 *boundnormal, tdouble3 ballCentre);
 void CopyMotionVel(unsigned nmoving,const unsigned *ridpmv,const float4 *velrhop,float3 *motionvel);
 
 //-Kernels for MLPistons motion.
